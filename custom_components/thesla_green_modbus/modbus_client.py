@@ -47,6 +47,9 @@ except ImportError:  # pymodbus 3.6.x
 
 _LOGGER = logging.getLogger(__name__)
 
+# wartości w konfiguracji są małymi literami (wymóg tłumaczeń HA); pymodbus oczekuje N/E/O
+PARITY_MAP = {"none": "N", "even": "E", "odd": "O", "N": "N", "E": "E", "O": "O"}
+
 
 class ThesllaError(Exception):
     """Bazowy błąd."""
@@ -87,7 +90,7 @@ class ThesllaModbusClient:
                     framer=framer,
                     baudrate=int(c.get(CONF_BAUDRATE, DEFAULT_BAUDRATE)),
                     bytesize=int(c.get(CONF_BYTESIZE, DEFAULT_BYTESIZE)),
-                    parity=c.get(CONF_PARITY, DEFAULT_PARITY),
+                    parity=PARITY_MAP.get(str(c.get(CONF_PARITY, DEFAULT_PARITY)), "E"),
                     stopbits=int(c.get(CONF_STOPBITS, DEFAULT_STOPBITS)),
                     timeout=self._timeout,
                     retries=1,

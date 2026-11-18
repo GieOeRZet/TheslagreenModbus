@@ -206,7 +206,7 @@ class ThesllaConfigFlow(ConfigFlow, domain=DOMAIN):
                 ["5", "6", "7", "8"]
             )
             fields[vol.Required(CONF_PARITY, default=get(CONF_PARITY, DEFAULT_PARITY))] = _dropdown(
-                ["N", "E", "O"], "parity"
+                ["none", "even", "odd"], "parity"
             )
             fields[vol.Required(CONF_STOPBITS, default=str(get(CONF_STOPBITS, DEFAULT_STOPBITS)))] = _dropdown(
                 ["1", "2"]

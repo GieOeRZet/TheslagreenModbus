@@ -68,9 +68,9 @@
     },
     "parity": {
       "options": {
-        "N": "N – none",
-        "E": "E – even",
-        "O": "O – odd"
+        "none": "N – none",
+        "even": "E – even",
+        "odd": "O – odd"
       }
     },
     "method": {

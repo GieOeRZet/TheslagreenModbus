@@ -68,9 +68,9 @@
     },
     "parity": {
       "options": {
-        "N": "N – brak",
-        "E": "E – parzysta",
-        "O": "O – nieparzysta"
+        "none": "N – brak",
+        "even": "E – parzysta",
+        "odd": "O – nieparzysta"
       }
     },
     "method": {
