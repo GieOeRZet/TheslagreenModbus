@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.1
+
+- Poprawka wydania: wersja w `manifest.json` zgodna z tagiem wydania (tag `V1.0.0` wskazywał commit z wersją 0.2.0). Brak zmian w działaniu integracji.
+
 ## v1.0.0
 
 - Pierwsze wydanie stabilne: scala funkcje z v0.1.0 i v0.2.0 (konfigurator w UI, rekonfiguracja, liczniki okresowe odzysku energii).
