@@ -186,6 +186,15 @@ ENTITY_DEFS: list[EntityDef] = [
         needs=_POWER_NEEDS, unit=UnitOfEnergy.KILO_WATT_HOUR, precision=3,
         device_class=SensorDeviceClass.ENERGY, state_class=SensorStateClass.TOTAL_INCREASING,
     ),
+    # liczniki okresowe (odpowiednik utility_meter: godzina / dzień / miesiąc / rok)
+    *(
+        EntityDef(
+            key=f"odzysk_energii_{period}", name=f"Odzysk energii {label}", platform=Platform.SENSOR,
+            fn=f"meter_{period}", needs=_POWER_NEEDS, unit=UnitOfEnergy.KILO_WATT_HOUR, precision=3,
+            device_class=SensorDeviceClass.ENERGY, state_class=SensorStateClass.TOTAL,
+        )
+        for period, label in (("godzina", "godzina"), ("dzien", "dzień"), ("miesiac", "miesiąc"), ("rok", "rok"))
+    ),
 ]
 
 ENTITIES_BY_KEY: dict[str, EntityDef] = {d.key: d for d in ENTITY_DEFS}

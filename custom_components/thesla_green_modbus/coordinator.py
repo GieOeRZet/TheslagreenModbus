@@ -52,6 +52,11 @@ class ThesllaCoordinator(DataUpdateCoordinator[None]):
         self._due: dict[DP, float] = dict.fromkeys(self._plan, 0.0)
         self._fails: dict[DP, int] = dict.fromkeys(self._plan, 0)
         self.values: dict[DP, int | bool | None] = dict.fromkeys(self._plan)
+        # całka z mocy [kWh] – wspólne źródło dla sensora energii i liczników okresowych
+        self.energy_kwh: float = 0.0
+        self.session_kwh: float = 0.0  # tylko energia policzona od startu (bez przywróconej wartości)
+        self._energy_restored = False
+        self._energy_ts: float | None = None
 
     # ---------- odpytywanie ----------
     async def _async_update_data(self) -> None:
@@ -61,6 +66,7 @@ class ThesllaCoordinator(DataUpdateCoordinator[None]):
                 self.values[dp] = await self.client.async_read(*dp)
                 self._fails[dp] = 0
             except ThesllaConnectionError as err:
+                self._energy_ts = None  # przerwa w danych – nie całkuj luki
                 raise UpdateFailed(f"Brak połączenia z bramką Modbus: {err}") from err
             except ThesllaReadError as err:
                 self._fails[dp] += 1
@@ -68,6 +74,24 @@ class ThesllaCoordinator(DataUpdateCoordinator[None]):
                 if self._fails[dp] >= MAX_READ_FAILS:
                     self.values[dp] = None
             self._due[dp] = time.monotonic() + self._plan[dp]
+        self._integrate_energy()
+
+    def _integrate_energy(self) -> None:
+        now = time.monotonic()
+        power = self.calc_power()
+        if power is not None and self._energy_ts is not None:
+            dt = now - self._energy_ts
+            if 0 < dt < 300:
+                added = power * dt / 3_600_000  # W*s -> kWh
+                self.energy_kwh += added
+                self.session_kwh += added
+        self._energy_ts = now if power is not None else None
+
+    def restore_energy(self, value: float) -> None:
+        """Jednorazowe przywrócenie całki po restarcie (wywołuje sensor energii)."""
+        if not self._energy_restored:
+            self._energy_restored = True
+            self.energy_kwh = max(self.energy_kwh, value)
 
     async def async_write(self, dp: DP, value: int) -> None:
         try:

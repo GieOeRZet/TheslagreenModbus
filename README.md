@@ -73,7 +73,7 @@ Który typ wybrać:
 | Rodzaj | Encje |
 |---|---|
 | Sensory | temperatury (czerpnia, nawiew, wywiew, za FPX, PCB), strumień nawiew i wywiew, lato/zima, bypass, tryb pracy, tryb specjalny, FPX (flaga, tryb) |
-| Wyliczane | sprawność, wysterowanie nawiewu i wywiewu (%), odzyskana moc (W), odzyskana energia (kWh, do panelu Energia) |
+| Wyliczane | sprawność, wysterowanie nawiewu i wywiewu (%), odzyskana moc (W), odzyskana energia (kWh, do panelu Energia), liczniki odzysku energii: godzina, dzień, miesiąc, rok |
 | Diagnostyka | alarmy, błędy, zabezpieczenie termiczne FPX, awarie wentylatorów i CF, wymiana filtrów |
 | Binary sensory | siłownik bypassu, potwierdzenie pracy |
 | Przełączniki | ON/OFF, bypass, mode, zima |
@@ -95,6 +95,9 @@ Który typ wybrać:
 - **Sprawność** = (Tnawiew − Tczerpnia) / (Twywiew − Tczerpnia) × 100 %, a przy otwartym bypassie 0 %.
 - **Odzyskana moc** = |Tnawiew − Tczerpnia| × przepływ nawiewu × 1200 / 3600 [W], a przy otwartym bypassie 0 W.
 - **Odzyskana energia** całkuje moc w czasie i przywraca wartość po restarcie.
+- **Odzysk energii godzina / dzień / miesiąc / rok** – liczniki okresowe (zastępują `utility_meter`),
+  zerowane na początku godziny, doby, miesiąca i roku. Po restarcie wracają do wartości z bieżącego okresu.
+  Energia z czasu, gdy Home Assistant był wyłączony, nie jest doliczana.
 - Wysterowanie liczone jest względem 240 m³/h.
 
 Temperatura `0x8000` (brak czujnika) i przepływ `65535` (nieaktywny CF) są pokazywane jako „niedostępny".
@@ -125,8 +128,9 @@ tap_action:
 4. Karty i automatyzacje zamieniające `modbus.write_register` przepnij na usługi `select.select_option`,
    `number.set_value` i `switch.turn_on/off`.
 
-Liczniki `utility_meter` (godzina, doba, miesiąc, rok) możesz zostawić w YAML-u z nowym sensorem
-`sensor.<nazwa>_odzyskana_energia` jako źródłem.
+Liczniki `utility_meter` nie są już potrzebne: integracja ma własne
+(`sensor.<nazwa>_odzysk_energii_godzina`, `_dzien`, `_miesiac`, `_rok`). Przy nazwie `Rekuperator` ID pasują do dawnych
+`unique_id` z YAML-a, ale historia starych liczników nie przenosi się do nowych encji.
 
 ## Rozwiązywanie problemów
 

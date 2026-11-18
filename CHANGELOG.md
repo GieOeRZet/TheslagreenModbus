@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.2.0
+
+- Dodano liczniki okresowe odzysku energii (godzina, dzień, miesiąc, rok) w miejsce `utility_meter` z YAML-a.
+- Całkowanie energii przeniesione do koordynatora (jedno źródło dla sensora energii i liczników).
+
 ## v0.1.0
 
 Pierwsze wydanie integracji **Thesla Green ModBUS** dla Home Assistant (instalacja przez HACS jako Custom repository).
