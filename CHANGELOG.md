@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.0
+
+- Pierwsze wydanie stabilne: scala funkcje z v0.1.0 i v0.2.0 (konfigurator w UI, rekonfiguracja, liczniki okresowe odzysku energii).
+- Poprawione klucze tłumaczeń (zgodność z hassfest), dodana ikona integracji.
+- Walidacja HACS i Hassfest w CI przechodzi.
+
 ## v0.2.0
 
 - Dodano liczniki okresowe odzysku energii (godzina, dzień, miesiąc, rok) w miejsce `utility_meter` z YAML-a.
