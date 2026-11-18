@@ -1,0 +1,83 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Thesla Green ModBUS",
+        "description": "Podaj nazwę urządzenia (prefiks nazw i ID encji) oraz sposób połączenia.",
+        "data": {
+          "name": "Nazwa",
+          "connection_type": "Typ połączenia"
+        }
+      },
+      "reconfigure": {
+        "title": "Rekonfiguracja – typ połączenia",
+        "description": "Wybierz typ połączenia (możesz zostawić obecny).",
+        "data": {
+          "connection_type": "Typ połączenia"
+        }
+      },
+      "connection": {
+        "title": "Parametry połączenia",
+        "description": "Typ połączenia: {type}",
+        "data": {
+          "host": "Adres IP / host",
+          "port": "Port",
+          "serial_port": "Port szeregowy",
+          "baudrate": "Prędkość (baudrate)",
+          "bytesize": "Bity danych",
+          "parity": "Parzystość",
+          "stopbits": "Bity stopu",
+          "method": "Wariant (RTU / ASCII)",
+          "timeout": "Timeout odpowiedzi",
+          "delay": "Opóźnienie po połączeniu",
+          "message_wait_ms": "Przerwa między zapytaniami",
+          "slave": "Unit ID (slave)"
+        },
+        "data_description": {
+          "timeout": "Jak długo czekać na odpowiedź (s).",
+          "delay": "Opóźnienie po nawiązaniu połączenia – część urządzeń go potrzebuje (zwykle 1–2 s). Dotyczy tylko pierwszego zapytania.",
+          "message_wait_ms": "Przerwa między zapytaniami. Domyślnie 30 ms dla serial, 0 dla pozostałych.",
+          "slave": "Unit ID urządzenia na magistrali (starsza nazwa: slave ID). 0 to broadcast – nie da się z niego czytać."
+        }
+      },
+      "entities": {
+        "title": "Wybór encji",
+        "description": "Odznacz encje, których nie chcesz używać. Ich rejestry nie będą odpytywane.",
+        "data": {
+          "entities": "Encje"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Nie można połączyć się (sprawdź adres/port lub port szeregowy).",
+      "no_response": "Połączenie działa, ale urządzenie nie odpowiada – sprawdź Unit ID, parametry linii i typ połączenia.",
+      "already_configured": "Takie połączenie z tym Unit ID jest już dodane."
+    },
+    "abort": {
+      "reconfigure_successful": "Konfiguracja została zaktualizowana."
+    }
+  },
+  "selector": {
+    "connection_type": {
+      "options": {
+        "tcp": "Modbus TCP",
+        "rtuovertcp": "Modbus RTU over TCP",
+        "udp": "Modbus UDP",
+        "serial": "Serial (RS-485): Modbus RTU / ASCII"
+      }
+    },
+    "parity": {
+      "options": {
+        "N": "N – brak",
+        "E": "E – parzysta",
+        "O": "O – nieparzysta"
+      }
+    },
+    "method": {
+      "options": {
+        "rtu": "RTU",
+        "ascii": "ASCII"
+      }
+    }
+  }
+}

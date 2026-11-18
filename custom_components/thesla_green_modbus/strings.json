@@ -1,0 +1,83 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Thesla Green ModBUS",
+        "description": "Enter a device name (prefix for entity names and IDs) and how to connect.",
+        "data": {
+          "name": "Name",
+          "connection_type": "Connection type"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure – connection type",
+        "description": "Select the connection type (you can keep the current one).",
+        "data": {
+          "connection_type": "Connection type"
+        }
+      },
+      "connection": {
+        "title": "Connection settings",
+        "description": "Connection type: {type}",
+        "data": {
+          "host": "IP address / host",
+          "port": "Port",
+          "serial_port": "Serial port",
+          "baudrate": "Baud rate",
+          "bytesize": "Data bits",
+          "parity": "Parity",
+          "stopbits": "Stop bits",
+          "method": "Variant (RTU / ASCII)",
+          "timeout": "Response timeout",
+          "delay": "Delay after connect",
+          "message_wait_ms": "Wait between requests",
+          "slave": "Unit ID (slave)"
+        },
+        "data_description": {
+          "timeout": "How long to wait for a response (s).",
+          "delay": "Delay after connecting – some devices need it (typically 1–2 s). Only affects the first request.",
+          "message_wait_ms": "Wait between requests. Default 30 ms for serial, 0 for others.",
+          "slave": "Unit ID of the device on the bus (older name: slave ID). 0 is broadcast – you cannot read from it."
+        }
+      },
+      "entities": {
+        "title": "Select entities",
+        "description": "Untick entities you do not want. Their registers will not be polled.",
+        "data": {
+          "entities": "Entities"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect (check address/port or serial port).",
+      "no_response": "Connected, but the device does not answer – check Unit ID, line settings and connection type.",
+      "already_configured": "This connection with this Unit ID is already configured."
+    },
+    "abort": {
+      "reconfigure_successful": "Configuration updated."
+    }
+  },
+  "selector": {
+    "connection_type": {
+      "options": {
+        "tcp": "Modbus TCP",
+        "rtuovertcp": "Modbus RTU over TCP",
+        "udp": "Modbus UDP",
+        "serial": "Serial (RS-485): Modbus RTU / ASCII"
+      }
+    },
+    "parity": {
+      "options": {
+        "N": "N – none",
+        "E": "E – even",
+        "O": "O – odd"
+      }
+    },
+    "method": {
+      "options": {
+        "rtu": "RTU",
+        "ascii": "ASCII"
+      }
+    }
+  }
+}
